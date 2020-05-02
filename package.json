@@ -1,0 +1,24 @@
+{
+  "name": "ciphers",
+  "version": "1.0.0",
+  "description": "Cipher algorithms implemented",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc --noEmit",
+    "test": "npx jest",
+    "lint": "npx eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^25.5.4",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
+  }
+}
