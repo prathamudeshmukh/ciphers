@@ -19,7 +19,7 @@ export default class Atbash {
       }
       const alphabetIndex = Alphabets.indexFor(char);
       const substituteLetterIndex = Alphabets.TOTAL - alphabetIndex;
-      processedText += Alphabets.at(substituteLetterIndex);
+      processedText += Alphabets.at(substituteLetterIndex - 1);
     });
     return processedText;
   }
