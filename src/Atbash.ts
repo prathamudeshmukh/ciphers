@@ -5,22 +5,26 @@ export default class Atbash {
     private static ASCII_ALPHABETS_START_INDEX = 96;
 
     static decrypt(text: string): string {
-      return text;
+      return Atbash.processString(text);
     }
 
     static encrypt(text: string): string {
+      return Atbash.processString(text);
+    }
+
+    private static processString(text: string): string {
       const chars = Array.from(text.toLowerCase());
-      let encryptedText = '';
+      let processedText = '';
       chars.forEach((char) => {
         if (char === ' ') {
-          encryptedText += ' ';
+          processedText += ' ';
           return;
         }
         const alphabetIndex = Atbash.getAlphabetIndex(char);
         const substituteLetterIndex = Atbash.TOTAL_NUMBER_ALPHABETS - alphabetIndex;
-        encryptedText += Atbash.getAlphabetAtIndex(substituteLetterIndex);
+        processedText += Atbash.getAlphabetAtIndex(substituteLetterIndex);
       });
-      return encryptedText;
+      return processedText;
     }
 
     private static getAlphabetIndex(char: string): number {
