@@ -3,3 +3,4 @@
 
 # Implemented ciphers
 - [Atbash](http://practicalcryptography.com/ciphers/classical-era/atbash-cipher/)
+- [Caesar](http://practicalcryptography.com/ciphers/classical-era/caesar/)
