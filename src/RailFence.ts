@@ -1,4 +1,7 @@
 /* eslint-disable no-continue,no-plusplus */
+import Position from './Models/Position';
+import Matrix from './Models/Matrix';
+
 export default class RailFence {
     private readonly key: number;
 
@@ -10,69 +13,56 @@ export default class RailFence {
       this.key = shift;
     }
 
-    private static initMatrix(height: number, width: number): string[][] {
-      const matrix: string[][] = [];
-      for (let i = 0; i < height; i++) {
-        matrix[i] = [];
-        for (let j = 0; j < width; j++) {
-          matrix[i][j] = '';
+    private static getText(matrix: Matrix): string {
+      let encryptedString = '';
+      for (const char of matrix) {
+        if (char !== '') {
+          encryptedString += char;
         }
       }
-      return matrix;
-    }
-
-    private static getText(matrix: string[][]): string {
-      let encryptedString = '';
-      matrix.forEach((row: string[]) => {
-        row.forEach((char: string) => {
-          if (char !== '') {
-            encryptedString += char;
-          }
-        })
-      });
       return encryptedString;
     }
 
     encrypt(plainText: string): string {
       const text = plainText.toLowerCase().replace(/ /g, '');
 
-      const matrix = RailFence.initMatrix(this.key, text.length);
+      const matrix = new Matrix(text.length, this.key);
 
       const chars = Array.from(text);
 
       let letterIndex = 0;
-      const movePositionIn = (direction: string, i: number, j: number): any => {
+      const movePositionIn = (direction: string, position: Position): Position => {
         if (direction === RailFence.DIRECT_DOWN) {
-          return { i: i + 1, j: j + 1 }
+          return { row: position.row + 1, column: position.column + 1 }
         }
         if (direction === RailFence.DIRECT_UP) {
-          return { i: i - 1, j: j + 1 }
+          return { row: position.row - 1, column: position.column + 1 }
         }
-        return {};
+        return { row: 0, column: 0 };
       };
 
       let direction = RailFence.DIRECT_DOWN;
-      let i = 0; let j = 0;
+      let row = 0; let column = 0;
       const list = [];
       while (letterIndex < text.length) {
-        list.push([i, j]);
-        matrix[i][j] = chars[letterIndex];
+        list.push([row, column]);
+        matrix.set({ row, column }, chars[letterIndex]);
         letterIndex += 1;
         if (direction === RailFence.DIRECT_DOWN) {
-          const { i: newI } = movePositionIn(direction, i, j);
+          const { row: newI } = movePositionIn(direction, { row, column });
           if (newI >= this.key) {
             direction = RailFence.DIRECT_UP;
           }
-          ({ i, j } = movePositionIn(direction, i, j));
+          ({ row, column } = movePositionIn(direction, { row, column }));
           continue;
         }
 
         if (direction === RailFence.DIRECT_UP) {
-          const { i: newI } = movePositionIn(direction, i, j);
+          const { row: newI } = movePositionIn(direction, { row, column });
           if (newI < 0) {
             direction = RailFence.DIRECT_DOWN;
           }
-          ({ i, j } = movePositionIn(direction, i, j));
+          ({ row, column } = movePositionIn(direction, { row, column }));
         }
       }
       return RailFence.getText(matrix);

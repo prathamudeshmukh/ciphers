@@ -33,5 +33,7 @@ module.exports = {
   rules: {
       "import/extensions": "off",
       semi: "off",
+      "no-plusplus":"off",
+      "no-restricted-syntax": "off",
   },
 };
