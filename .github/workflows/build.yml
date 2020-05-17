@@ -26,9 +26,11 @@ jobs:
       # Runs a single command using the runners shell
     - name: Install packages
       run: npm i
+
     - name: Run test
       run: npm run test-coverage
+
     - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
