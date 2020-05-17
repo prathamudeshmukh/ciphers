@@ -25,9 +25,8 @@ export default class RailFence {
 
     private getPathCoordinates(textLength: number): Position[] {
       const pathCoordinates: Position[] = [];
-      let letterIndex = 0;
+      let letterIndex = 0; let row = 0; let column = 0;
       let direction = RailFence.DIRECT_DOWN;
-      let row = 0; let column = 0;
       while (letterIndex < textLength) {
         pathCoordinates.push({ row, column });
         letterIndex += 1;
@@ -70,5 +69,33 @@ export default class RailFence {
         matrix.set(position, chars[letterIndex]);
       });
       return RailFence.getText(matrix);
+    }
+
+    decrypt(cipherText: string): string {
+      const text = cipherText.toLowerCase().replace(/ /g, '');
+      const matrix = new Matrix(text.length, this.key);
+      const chars = Array.from(text);
+      const pathCoordinates = this.getPathCoordinates(text.length);
+      const rowWiseCoordinates = new Map<number, Position[]>();
+      let plainText = '';
+      pathCoordinates.forEach((position) => {
+        const positions = rowWiseCoordinates.get(position.row);
+        if (positions) {
+          positions.push(position);
+          return;
+        }
+        rowWiseCoordinates.set(position.row, [position]);
+      });
+      let letterIndex = 0;
+      rowWiseCoordinates.forEach((positions) => {
+        positions.forEach((position) => {
+          matrix.set(position, chars[letterIndex]);
+          letterIndex++;
+        });
+      });
+      pathCoordinates.forEach((position) => {
+        plainText += matrix.get(position);
+      });
+      return plainText;
     }
 }
