@@ -23,48 +23,52 @@ export default class RailFence {
       return encryptedString;
     }
 
-    encrypt(plainText: string): string {
-      const text = plainText.toLowerCase().replace(/ /g, '');
-
-      const matrix = new Matrix(text.length, this.key);
-
-      const chars = Array.from(text);
-
+    private getPathCoordinates(textLength: number): Position[] {
+      const pathCoordinates: Position[] = [];
       let letterIndex = 0;
-      const movePositionIn = (direction: string, position: Position): Position => {
-        if (direction === RailFence.DIRECT_DOWN) {
-          return { row: position.row + 1, column: position.column + 1 }
-        }
-        if (direction === RailFence.DIRECT_UP) {
-          return { row: position.row - 1, column: position.column + 1 }
-        }
-        return { row: 0, column: 0 };
-      };
-
       let direction = RailFence.DIRECT_DOWN;
       let row = 0; let column = 0;
-      const list = [];
-      while (letterIndex < text.length) {
-        list.push([row, column]);
-        matrix.set({ row, column }, chars[letterIndex]);
+      while (letterIndex < textLength) {
+        pathCoordinates.push({ row, column });
         letterIndex += 1;
         if (direction === RailFence.DIRECT_DOWN) {
-          const { row: newI } = movePositionIn(direction, { row, column });
+          const { row: newI } = RailFence.movePositionIn(direction, { row, column });
           if (newI >= this.key) {
             direction = RailFence.DIRECT_UP;
           }
-          ({ row, column } = movePositionIn(direction, { row, column }));
+          ({ row, column } = RailFence.movePositionIn(direction, { row, column }));
           continue;
         }
 
         if (direction === RailFence.DIRECT_UP) {
-          const { row: newI } = movePositionIn(direction, { row, column });
+          const { row: newI } = RailFence.movePositionIn(direction, { row, column });
           if (newI < 0) {
             direction = RailFence.DIRECT_DOWN;
           }
-          ({ row, column } = movePositionIn(direction, { row, column }));
+          ({ row, column } = RailFence.movePositionIn(direction, { row, column }));
         }
       }
+      return pathCoordinates;
+    }
+
+    private static movePositionIn(direction: string, position: Position): Position {
+      if (direction === RailFence.DIRECT_DOWN) {
+        return { row: position.row + 1, column: position.column + 1 }
+      }
+      if (direction === RailFence.DIRECT_UP) {
+        return { row: position.row - 1, column: position.column + 1 }
+      }
+      return { row: 0, column: 0 };
+    }
+
+    encrypt(plainText: string): string {
+      const text = plainText.toLowerCase().replace(/ /g, '');
+      const matrix = new Matrix(text.length, this.key);
+      const chars = Array.from(text);
+      const pathCoordinates = this.getPathCoordinates(text.length);
+      pathCoordinates.forEach((position, letterIndex) => {
+        matrix.set(position, chars[letterIndex]);
+      });
       return RailFence.getText(matrix);
     }
 }
