@@ -30,3 +30,29 @@ test('Matrix should return elements in zig-zag iterating fashion', () => {
     index++;
   }
 });
+
+test('Matrix should return column elements for given column index', () => {
+  const matrix = new Matrix(2, 2);
+  matrix.set({ row: 0, column: 0 }, 'A');
+  matrix.set({ row: 0, column: 1 }, 'B');
+  matrix.set({ row: 1, column: 0 }, 'C');
+  matrix.set({ row: 1, column: 1 }, 'D');
+  const expectedResult = ['B', 'D'];
+  const actualResult = matrix.getColumn(1);
+  expectedResult.forEach((expectedValue, index) => expect(actualResult[index]).toBe(expectedValue));
+});
+
+test('Matrix should set column elements for given column index', () => {
+  const matrix = new Matrix(2, 2);
+  matrix.set({ row: 0, column: 0 }, 'A');
+  matrix.set({ row: 0, column: 1 }, 'B');
+  matrix.set({ row: 1, column: 0 }, 'C');
+  matrix.set({ row: 1, column: 1 }, 'D');
+  const expectedResult = ['A', 'F', 'C', 'G'];
+  matrix.setColumn(1, ['F', 'G']);
+  let index = 0;
+  for (const value of matrix) {
+    expect(value).toBe(expectedResult[index]);
+    index++;
+  }
+});

@@ -16,6 +16,16 @@ export default class Matrix {
       return this.matrix[position.row][position.column];
     }
 
+    getColumn(columnIndex: number): string[] {
+      return this.matrix.map((row) => row[columnIndex]);
+    }
+
+    setColumn(columnIndex: number, column: string[]): void {
+      this.matrix.forEach((row, index) => {
+        this.matrix[index][columnIndex] = column[index];
+      });
+    }
+
     set(position: Position, value: string): void {
       this.matrix[position.row][position.column] = value;
     }
