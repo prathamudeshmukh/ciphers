@@ -8,3 +8,4 @@
 - [Atbash](http://practicalcryptography.com/ciphers/classical-era/atbash-cipher/)
 - [Caesar](http://practicalcryptography.com/ciphers/classical-era/caesar/)
 - [RailFence](http://practicalcryptography.com/ciphers/classical-era/rail-fence/)
+- [Columnar Transposition](http://practicalcryptography.com/ciphers/classical-era/columnar-transposition/)
