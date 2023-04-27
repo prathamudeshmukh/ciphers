@@ -11,4 +11,8 @@ export default class Alphabets {
     static at(index: number): string {
       return String.fromCharCode(index + Alphabets.ASCII_ALPHABETS_START_INDEX);
     }
+
+    static getAll(): string[] {
+      return Array.from(Array(26)).map((e, i) => String.fromCharCode(i + 65));
+    }
 }
