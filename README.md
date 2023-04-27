@@ -9,3 +9,4 @@
 - [Caesar](http://practicalcryptography.com/ciphers/classical-era/caesar/)
 - [RailFence](http://practicalcryptography.com/ciphers/classical-era/rail-fence/)
 - [Columnar Transposition](http://practicalcryptography.com/ciphers/classical-era/columnar-transposition/)
+- [Autokey](http://practicalcryptography.com/ciphers/classical-era/autokey/)
